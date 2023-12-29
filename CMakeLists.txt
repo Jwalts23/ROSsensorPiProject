@@ -18,6 +18,13 @@ include_directories(include)
 add_executable(test_run src/main.cpp)
 ament_target_dependencies(test_run)
 
+add_executable(talker src/publisher_member_function.cpp)
+ament_target_dependencies(talker rclcpp std_msgs)
+
+add_executable(listener src/subscriber_member_function.cpp)
+ament_target_dependencies(listener rclcpp std_msgs)
+
+
 #setup include directory to be included
 add_subdirectory(include/${PROJECT_NAME})
 target_include_directories(test_run PUBLIC
@@ -27,7 +34,9 @@ target_include_directories(test_run PUBLIC
 target_link_libraries(test_run PRIVATE sensors ${wiringPi_LIB})
 
 install(TARGETS 
-  test_run 
+  test_run
+  talker
+  listener 
   DESTINATION lib/${PROJECT_NAME})
 
 install(
